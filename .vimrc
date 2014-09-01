@@ -18,7 +18,7 @@ Bundle 'altercation/vim-colors-solarized'
 " => can omit the username part
 Bundle 'L9'
 Bundle 'FuzzyFinder'
-" Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle 'scrooloose/nerdtree'
 Bundle 'klen/python-mode'
 Bundle 'davidhalter/jedi-vim'
@@ -29,8 +29,25 @@ Bundle 'git://git.wincent.com/command-t.git'
 
 filetype plugin indent on     " required!
 
+" my settings
 syn on 
 set number
+set autochdir "auto change the cwd to the file's dir
+
+" tab-related stuff
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+set term=xterm-256color
+
+" more subtle popup colors 
+if has ('gui_running')
+    highlight Pmenu guibg=#cccccc gui=bold    
+endif
+
+
+
 
 augroup vimrc_autocmds
 	autocmd!
@@ -93,3 +110,5 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 "
 " Don't autofold code
 let g:pymode_folding = 0
+
+
