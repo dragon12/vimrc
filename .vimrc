@@ -21,6 +21,7 @@ Bundle 'FuzzyFinder'
 " Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle 'scrooloose/nerdtree'
 Bundle 'klen/python-mode'
+Bundle 'davidhalter/jedi-vim'
 
 " non github repos
 Bundle 'git://git.wincent.com/command-t.git'
@@ -65,7 +66,7 @@ map <F2> :NERDTreeToggle<CR>
 " ]M            Jump on next class or method (normal, visual, operator modes)
 
 
-let g:pymode_rope = 1
+let g:pymode_rope = 0
 "
 " Documentation
 let g:pymode_doc = 1
