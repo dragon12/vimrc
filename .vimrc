@@ -13,15 +13,13 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle 'majutsushi/tagbar'
 Bundle 'altercation/vim-colors-solarized'
-
-" Github repos of the user 'vim-scripts'
-" => can omit the username part
 Bundle 'L9'
 Bundle 'FuzzyFinder'
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle 'scrooloose/nerdtree'
 Bundle 'klen/python-mode'
 Bundle 'davidhalter/jedi-vim'
+Bundle 'ivanov/vim-ipython'
 
 " non github repos
 Bundle 'git://git.wincent.com/command-t.git'
@@ -54,8 +52,12 @@ augroup vimrc_autocmds
 	" highlight characters past column 120
 	autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
 	autocmd FileType python match Excess /\%120v.*/
-        autocmd FileType python set nowrap
-        augroup END
+    autocmd FileType python set nowrap
+augroup END
+
+augroup python_autocmds
+augroup END
+
 
 " Powerline setup
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 9
@@ -94,6 +96,7 @@ let g:pymode_lint = 1
 let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
 let g:pymode_lint_write = 1
+let g:pymode_lint_on_write = 1
 "
 " Support virtualenv
 let g:pymode_virtualenv = 1
