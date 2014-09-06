@@ -21,13 +21,20 @@ Bundle 'klen/python-mode'
 Bundle 'davidhalter/jedi-vim'
 Bundle 'ivanov/vim-ipython'
 
+" web browser
+Bundle 'mjbrownie/browser.vim.git'
+
 " non github repos
 Bundle 'git://git.wincent.com/command-t.git'
 " ...
 
 filetype plugin indent on     " required!
 
+" 
+"
 " my settings
+"
+"
 syn on 
 set number
 set autochdir "auto change the cwd to the file's dir
@@ -44,8 +51,72 @@ if has ('gui_running')
     highlight Pmenu guibg=#cccccc gui=bold    
 endif
 
+" reopen file at last position
+" Uncomment the following to have Vim jump to the last position when                                                       
+" " reopening a file
+if has("autocmd")
+    au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+endif
+
+set wildmode=longest,list,full
+set wildmenu
+
+set hlsearch " search highlighting
+
+"map ctrl-<> to ctrl-W<>
+noremap <C-j> <C-W>j
+noremap <C-k> <C-W>k
+noremap <C-h> <C-W>h
+noremap <C-l> <C-W>l
+
+"map alt-j/k to scrolling the other window in a 2-window split
+nmap <Esc>j <c-w>l<c-f><c-w>p
+nmap <Esc>k <c-w>l<c-b><c-w>p
+"nmap <Esc>f <c-w>l<c-f><c-w>p
+"nmap <Esc>b <c-w>l<c-b><c-w>p
+
+"map jj to exit insert mode
+:imap jj <Esc>
+
+"this function maps Alt-down and Alt-Up to move other window
+"" put in your ~/.vimrc
+fun! ScrollOtherWindow(dir)
+    if a:dir == "down"
+        let move = "\<C-E>"
+    elseif a:dir == "up"
+        let move = "\<C-Y>"
+    endif
+    exec "normal \<C-W>p" . move . "\<C-W>p"
+endfun
+
+"nmap <silent> <Esc>j :call ScrollOtherWindow("down")<CR>
+"nmap <silent> <Esc>k :call ScrollOtherWindow("up")<CR>
 
 
+" Turn on and off the lint error pane
+function! ToggleErrors()
+    let old_last_winnr = winnr('$')
+    lclose
+    if old_last_winnr == winnr('$')
+        " Nothing was closed, open syntastic error location panel
+        PymodeLint
+    endif
+endfunction
+
+" better start/session options
+Bundle 'mhinz/vim-startify'
+let g:startify_session_dir = '~/.vim_sessions'
+let g:startify_session_persistence = 1 "auto-save sessions before exiting (doesn't save buffers)
+let g:startify_restore_position = 1
+
+
+
+
+
+"
+" End my settings
+"
 
 augroup vimrc_autocmds
 	autocmd!
@@ -53,6 +124,8 @@ augroup vimrc_autocmds
 	autocmd FileType python highlight Excess ctermbg=DarkGrey guibg=Black
 	autocmd FileType python match Excess /\%120v.*/
     autocmd FileType python set nowrap
+    autocmd FileType python noremap <F3> :<C-u>call ToggleErrors()<CR>
+    autocmd FileType python IPython
 augroup END
 
 augroup python_autocmds
@@ -96,7 +169,7 @@ let g:pymode_lint = 1
 let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
 let g:pymode_lint_write = 1
-let g:pymode_lint_on_write = 1
+let g:pymode_lint_unmodified = 1
 "
 " Support virtualenv
 let g:pymode_virtualenv = 1
