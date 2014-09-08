@@ -18,7 +18,6 @@ Bundle 'FuzzyFinder'
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
 Bundle 'scrooloose/nerdtree'
 Bundle 'klen/python-mode'
-Bundle 'davidhalter/jedi-vim'
 Bundle 'ivanov/vim-ipython'
 
 " web browser
@@ -96,6 +95,7 @@ endfun
 
 " Turn on and off the lint error pane
 function! ToggleErrors()
+    PymodeLintAuto
     let old_last_winnr = winnr('$')
     lclose
     if old_last_winnr == winnr('$')
@@ -110,14 +110,16 @@ let g:startify_session_dir = '~/.vim_sessions'
 let g:startify_session_persistence = 1 "auto-save sessions before exiting (doesn't save buffers)
 let g:startify_restore_position = 1
 
-
-
-
+" completion etc for python
+Bundle 'davidhalter/jedi-vim'
+let g:jedi#goto_assignments_command = "<F2>"
 
 "
 " End my settings
 "
 
+"set syn on
+syn on
 augroup vimrc_autocmds
 	autocmd!
 	" highlight characters past column 120
@@ -138,7 +140,7 @@ set laststatus=2
 
 
 " NerdTree
-map <F2> :NERDTreeToggle<CR>
+map <F4> :NERDTreeToggle<CR>
 
 "Python-mode
 " Activate rope
@@ -167,6 +169,8 @@ let g:pymode_doc_key = 'K'
 "Linting
 let g:pymode_lint = 1
 let g:pymode_lint_checker = "pyflakes,pep8"
+let g:pymode_lint_ignore = "W391"  " Ignore blank line at end of file
+
 " Auto check on save
 let g:pymode_lint_write = 1
 let g:pymode_lint_unmodified = 1
