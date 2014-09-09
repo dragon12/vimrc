@@ -11,7 +11,6 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
-Bundle 'majutsushi/tagbar'
 Bundle 'altercation/vim-colors-solarized'
 Bundle 'L9'
 Bundle 'FuzzyFinder'
@@ -24,7 +23,6 @@ Bundle 'ivanov/vim-ipython'
 Bundle 'mjbrownie/browser.vim.git'
 
 " non github repos
-Bundle 'git://git.wincent.com/command-t.git'
 " ...
 
 filetype plugin indent on     " required!
@@ -34,9 +32,10 @@ filetype plugin indent on     " required!
 " my settings
 "
 "
+let mapleader=","
 syn on 
 set number
-set autochdir "auto change the cwd to the file's dir
+"set autochdir "auto change the cwd to the file's dir
 
 " tab-related stuff
 set tabstop=4
@@ -114,11 +113,22 @@ let g:startify_restore_position = 1
 Bundle 'davidhalter/jedi-vim'
 let g:jedi#goto_assignments_command = "<F2>"
 
+" tagbar for opening python taglist window
+Bundle 'majutsushi/tagbar'
+let g:tagbar_left = 1
+nnoremap <silent> <leader>l :TagbarOpenAutoClose<CR>
+
+" running unit tests
+Bundle 'nvie/vim-pyunit.git'
+let PyUnitCmd = 'nosetests -vv --exe --with-machineout'
+"let PyUnitCmd = 'nosetests -vv --exe'
+
+" fast file-search using <leader>t
+Bundle 'git://git.wincent.com/command-t.git'
 "
 " End my settings
 "
 
-"set syn on
 syn on
 augroup vimrc_autocmds
 	autocmd!
